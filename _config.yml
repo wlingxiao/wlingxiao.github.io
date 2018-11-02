@@ -81,4 +81,5 @@ deploy:
   type: git
   repo:
     github: https://__GITHUB_TOKEN__@github.com/wlingxiao/wlingxiao.github.io.git
+    coding: https://wlingxiao:__CODING_TOKEN__@git.coding.net/wlingxiao/wlingxiao.coding.me.git
   branch: master

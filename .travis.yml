@@ -21,4 +21,5 @@ after_script:
   - git config user.name "wlingxiao"
   - git config user.email "wlingxiao@outlook.com"
   - sed -i "s/__GITHUB_TOKEN__/${__GITHUB_TOKEN__}/g" ./_config.yml
+  - sed -i "s/__CODING_TOKEN__/${__CODING_TOKEN__}/g" ./_config.yml
   - hexo deploy
