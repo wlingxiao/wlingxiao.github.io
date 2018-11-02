@@ -80,5 +80,5 @@ theme: even
 deploy:
   type: git
   repo:
-    github: git@github.com:wlingxiao/wlingxiao.github.io.git
+    github: https://__GITHUB_TOKEN__@github.com/wlingxiao/wlingxiao.github.io.git
   branch: master

@@ -1,0 +1,24 @@
+language: node_js
+sudo: required
+node_js: 
+  - 8.12.0
+
+branches:
+  only:
+    - doc
+
+before_install:
+  - yarn global add hexo-cli 
+
+install:
+  - yarn install
+
+script:
+  - hexo clean
+  - hexo generate
+
+after_script:
+  - git config user.name "wlingxiao"
+  - git config user.email "wlingxiao@outlook.com"
+  - sed -i "s/__GITHUB_TOKEN__/${__GITHUB_TOKEN__}/g" ./_config.yml
+  - hexo deploy
