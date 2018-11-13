@@ -96,3 +96,41 @@ class Example {
 [深入理解Java虚拟机（第2版） 12.3.3](https://book.douban.com/subject/24722612/)  
 
 2. 禁止指令重排序优化
+对内存屏障的理解：
+> Store Barrier  
+> Store屏障，是x86的”sfence“指令，强制所有在store屏障指令之前的store指令，都在该store屏障指令执行之前被执行，并把store缓冲区的数据都刷到CPU缓存。这会使得程序状态对其它CPU可见，这样其它CPU可以根据需要介入。一个实际的好例子是Disruptor中的BatchEventProcessor。当序列Sequence被一个消费者更新时，其它消费者(Consumers)和生产者（Producers）知道该消费者的进度，因此可以采取合适的动作。所以屏障之前发生的内存更新都可见了。
+
+> Load Barrier  
+> Load屏障，是x86上的”ifence“指令，强制所有在load屏障指令之后的load指令，都在该load屏障指令执行之后被执行，并且一直等到load缓冲区被该CPU读完才能执行之后的load指令。这使得从其它CPU暴露出来的程序状态对该CPU可见，这之后CPU可以进行后续处理。一个好例子是上面的BatchEventProcessor的sequence对象是放在屏障后被生产者或消费者使用。
+
+> Java 内存模型中 volatile 变量在写操作之后会插入一个 store 屏障，在读操作之前会插入一个 load 屏障。一个类的final字段会在初始化后插入一个 store 屏障，来确保 final 字段在构造函数初始化完成并可被使用时可见。
+
+```java
+class Example {
+     private volatile boolean i = false;
+
+    private int j = 0;
+
+    /**
+     * 线程 A 执行此方法，修改 i 为 true, j = 0
+     */
+    public void run() {
+        j = 1;
+        i = true;
+    }
+
+    /**
+     * 线程 B 执行 此方法，检查 i 的值，在 i 为 true 时打印 j 的值。
+     * 由于被 volatile 修饰的变量在写操作之后会插入一个 store 屏障，在读操作之前会插入一个 load 屏障
+     * 屏障之前发生的内存更新都可见，所以线程 B 检查到 i 为 true 时 j 的值为 1
+     */
+    public void doSomething() {
+        while (true) {
+            if (i) {
+                System.out.println(j); // 会打印 1
+            }
+        }
+    }
+}
+```
+[内存屏障](http://ifeve.com/memory-barriers-or-fences/)  
