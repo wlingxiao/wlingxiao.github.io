@@ -6,6 +6,3 @@
 
 #### new post
 `hexo new post_name`
-
-#### deploy
-`hexo deploy`
