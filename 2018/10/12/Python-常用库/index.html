@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="Python 常用库">
+
+
+
+
+  <meta name="keywords" content="Python, wlingxiao's blog">
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="wlingxiao's blog">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="https://wlingxiao.github.io/2018/10/12/Python-常用库/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> Python 常用库 - wlingxiao's blog </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">wlingxiao's blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">wlingxiao's blog</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          Python 常用库
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2018-10-12
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/Python/">Python</a>
+            
+          </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#requests"><span class="toc-text">requests</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#请求"><span class="toc-text">请求</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#响应"><span class="toc-text">响应</span></a></li></ol></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#sqlalchemy"><span class="toc-text">sqlalchemy</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ORM用法"><span class="toc-text">ORM用法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#导入"><span class="toc-text">导入</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建基类对象"><span class="toc-text">创建基类对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#定义-Model"><span class="toc-text">定义 Model</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#初始化数据库连接"><span class="toc-text">初始化数据库连接</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建-DBSession"><span class="toc-text">创建 DBSession</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建-session"><span class="toc-text">创建 session</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#添加对象到-session"><span class="toc-text">添加对象到 session</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查询数据"><span class="toc-text">查询数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#提交-session"><span class="toc-text">提交 session</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#关闭-session"><span class="toc-text">关闭 session</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#执行普通-sql-语句"><span class="toc-text">执行普通 sql 语句</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#新增数据"><span class="toc-text">新增数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#删除数据"><span class="toc-text">删除数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查询数据-1"><span class="toc-text">查询数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#更新数据"><span class="toc-text">更新数据</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#datatime"><span class="toc-text">datatime</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#格式化字符串为-datatime"><span class="toc-text">格式化字符串为 datatime</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#datatime-格式化字符串"><span class="toc-text">datatime 格式化字符串</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#获取当前时间的-datetime"><span class="toc-text">获取当前时间的 datetime</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#datetime-转-timestamp"><span class="toc-text">datetime 转 timestamp</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#timestamp-转-datetime，-使用本地时区"><span class="toc-text">timestamp 转 datetime， 使用本地时区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#timestamp-转-datetime-使用-UTC-标准时区"><span class="toc-text">timestamp 转 datetime, 使用 UTC 标准时区</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#datetime-加减"><span class="toc-text">datetime 加减</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Beautiful-Soup"><span class="toc-text">Beautiful Soup</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#导入-bs4-库"><span class="toc-text">导入 bs4 库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#创建-BeautifulSoup-对象"><span class="toc-text">创建 BeautifulSoup 对象</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#得到第一个匹配的-Tag-对象-type-为-bs4-element-Tag"><span class="toc-text">得到第一个匹配的 Tag 对象,type 为 bs4.element.Tag</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Tag-对象属性"><span class="toc-text">Tag 对象属性</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#获取-Tag-对象的内部的文字"><span class="toc-text">获取 Tag 对象的内部的文字</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#遍历文档树"><span class="toc-text">遍历文档树</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#获取-Tag-子节点"><span class="toc-text">获取 Tag 子节点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#获取后代节点"><span class="toc-text">获取后代节点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#获取多个内容"><span class="toc-text">获取多个内容</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#搜索-Tag-节点的后代节点"><span class="toc-text">搜索 Tag 节点的后代节点</span></a></li></ol></li>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <p>包含的库有 <code>requests</code>, <code>sqlalchemy</code>, <code>datatime</code>, <code>lxml</code><br><a id="more"></a><br><code>import requests</code></p>
+<h3 id="requests"><a href="#requests" class="headerlink" title="requests"></a>requests</h3><h4 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h4><p>GET 请求 <code>requests.get(url)</code><br>请求参数 <code>requests.get(url, params={})</code><br>定制请求头 <code>requests.get(url, headers={})</code><br>POST 请求 <code>requests.post(url)</code><br>请求参数 <code>requests.post(url, data={})</code><br>定制请求头 <code>requests.post(url, headers={})</code>  </p>
+<h4 id="响应"><a href="#响应" class="headerlink" title="响应"></a>响应</h4><p>文本内容 <code>r.text</code><br>响应编码 <code>r.encoding</code><br>二进制响应内容 <code>r.content</code><br>json 响应内容 <code>r.json()</code><br>响应状态码 <code>r.status_code</code><br>响应头 <code>r.headers[&#39;headr_name&#39;]</code><br>响应 cookie <code>r.cookies[&#39;cookie_name&#39;]</code>  </p>
+<h2 id="sqlalchemy"><a href="#sqlalchemy" class="headerlink" title="sqlalchemy"></a>sqlalchemy</h2><h3 id="ORM用法"><a href="#ORM用法" class="headerlink" title="ORM用法"></a>ORM用法</h3><h4 id="导入"><a href="#导入" class="headerlink" title="导入"></a>导入</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> slqalchemy <span class="keyword">import</span> Column, String, create_engine</span><br><span class="line"><span class="keyword">from</span> slqalchemy.orm <span class="keyword">import</span> sessionmaker</span><br><span class="line"><span class="keyword">from</span> sqlalchemy.ext.declarative <span class="keyword">import</span> declarative_base</span><br></pre></td></tr></table></figure>
+<h4 id="创建基类对象"><a href="#创建基类对象" class="headerlink" title="创建基类对象"></a>创建基类对象</h4><p><code>Base = declarative_base()</code></p>
+<h4 id="定义-Model"><a href="#定义-Model" class="headerlink" title="定义 Model"></a>定义 Model</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span><span class="params">(Base)</span>:</span></span><br><span class="line">    <span class="comment"># 声明表名</span></span><br><span class="line">    __tablename__ = <span class="string">'User'</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 声明表结构</span></span><br><span class="line">    id = Column(String(<span class="number">20</span>), primary_key=<span class="keyword">True</span>)</span><br></pre></td></tr></table></figure>
+<h4 id="初始化数据库连接"><a href="#初始化数据库连接" class="headerlink" title="初始化数据库连接"></a>初始化数据库连接</h4><p><code>engine = create_engine(&#39;数据库类型+数据库驱动名称://用户名:口令@机器地址:端口号/数据库名&#39;, echo=True) # echo=True 打印 sql 语句</code></p>
+<h4 id="创建-DBSession"><a href="#创建-DBSession" class="headerlink" title="创建 DBSession"></a>创建 DBSession</h4><p><code>DBSession = sessionmaker(bind=engine)</code></p>
+<h4 id="创建-session"><a href="#创建-session" class="headerlink" title="创建 session"></a>创建 session</h4><p><code>session = DBSession()</code></p>
+<h4 id="添加对象到-session"><a href="#添加对象到-session" class="headerlink" title="添加对象到 session"></a>添加对象到 session</h4><p><code>session.add(user)</code></p>
+<h4 id="查询数据"><a href="#查询数据" class="headerlink" title="查询数据"></a>查询数据</h4><h4 id="提交-session"><a href="#提交-session" class="headerlink" title="提交 session"></a>提交 session</h4><p><code>session.commit()</code></p>
+<h4 id="关闭-session"><a href="#关闭-session" class="headerlink" title="关闭 session"></a>关闭 session</h4><p><code>session.close()</code></p>
+<h3 id="执行普通-sql-语句"><a href="#执行普通-sql-语句" class="headerlink" title="执行普通 sql 语句"></a>执行普通 sql 语句</h3><h4 id="新增数据"><a href="#新增数据" class="headerlink" title="新增数据"></a>新增数据</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sql = text(<span class="string">'INSERT INTO user(name, pwd) VALUES (:name, :pwd)'</span>)</span><br><span class="line">data = session.execute(sql, &#123;<span class="string">'name'</span>: <span class="string">''</span>, <span class="string">'pwd'</span>: <span class="string">''</span>&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="删除数据"><a href="#删除数据" class="headerlink" title="删除数据"></a>删除数据</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sql = text(<span class="string">'DELETE FROM user WHERE id = :id'</span>)</span><br><span class="line">data = session.execute(sql, &#123;<span class="string">'id'</span>: <span class="string">''</span>&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="查询数据-1"><a href="#查询数据-1" class="headerlink" title="查询数据"></a>查询数据</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sql = text(<span class="string">'SELECT * FROM user WHERE id &lt; :id'</span>)</span><br><span class="line">data = session.execute(sql, &#123;<span class="string">'id'</span>: <span class="string">''</span>&#125;)</span><br><span class="line">data.rowcount <span class="comment"># 显示条数</span></span><br><span class="line">data.fetchone() <span class="comment"># 获取一条数据</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> data.fetchall(): <span class="comment"># 获取所有数据</span></span><br><span class="line">    print(i)</span><br></pre></td></tr></table></figure>
+<h4 id="更新数据"><a href="#更新数据" class="headerlink" title="更新数据"></a>更新数据</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sql = text(<span class="string">'UPDATE user SET name = :old_name WHERE name = :new_name'</span>)</span><br><span class="line">session.execute(sql, &#123;<span class="string">'old_name'</span>: <span class="string">''</span>, <span class="string">'new_name'</span>: <span class="string">''</span>&#125;)</span><br></pre></td></tr></table></figure>
+<h2 id="datatime"><a href="#datatime" class="headerlink" title="datatime"></a>datatime</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> datatime <span class="keyword">import</span> datatime</span><br></pre></td></tr></table></figure>
+<h4 id="格式化字符串为-datatime"><a href="#格式化字符串为-datatime" class="headerlink" title="格式化字符串为 datatime"></a>格式化字符串为 datatime</h4><p><code>datatime.strptime(&#39;2016-08-06&#39;, &#39;%Y-%m-%d&#39;)</code></p>
+<h4 id="datatime-格式化字符串"><a href="#datatime-格式化字符串" class="headerlink" title="datatime 格式化字符串"></a>datatime 格式化字符串</h4><p><code>datatime_obj.strftime(&#39;%Y-%m-%d&#39;)</code></p>
+<h4 id="获取当前时间的-datetime"><a href="#获取当前时间的-datetime" class="headerlink" title="获取当前时间的 datetime"></a>获取当前时间的 datetime</h4><p><code>datetime.now()</code></p>
+<h4 id="datetime-转-timestamp"><a href="#datetime-转-timestamp" class="headerlink" title="datetime 转 timestamp"></a>datetime 转 timestamp</h4><p><code>datetime_obj.timestamp()</code></p>
+<h4 id="timestamp-转-datetime，-使用本地时区"><a href="#timestamp-转-datetime，-使用本地时区" class="headerlink" title="timestamp 转 datetime， 使用本地时区"></a>timestamp 转 datetime， 使用本地时区</h4><p><code>datetime.fromtimestamp(float)</code></p>
+<h4 id="timestamp-转-datetime-使用-UTC-标准时区"><a href="#timestamp-转-datetime-使用-UTC-标准时区" class="headerlink" title="timestamp 转 datetime, 使用 UTC 标准时区"></a>timestamp 转 datetime, 使用 UTC 标准时区</h4><p><code>datetime.utcfromtimestamp(float)</code></p>
+<h4 id="datetime-加减"><a href="#datetime-加减" class="headerlink" title="datetime 加减"></a>datetime 加减</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> timedelta, datetime</span><br><span class="line">datetime.now() + timedelta(hours=<span class="number">10</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="Beautiful-Soup"><a href="#Beautiful-Soup" class="headerlink" title="Beautiful Soup"></a>Beautiful Soup</h2><h4 id="导入-bs4-库"><a href="#导入-bs4-库" class="headerlink" title="导入 bs4 库"></a>导入 bs4 库</h4><p><code>from bs4 import BeautifulSoup</code>  </p>
+<h4 id="创建-BeautifulSoup-对象"><a href="#创建-BeautifulSoup-对象" class="headerlink" title="创建 BeautifulSoup 对象"></a>创建 BeautifulSoup 对象</h4><p><code>soup = BeautifulSoup(html, &#39;html.parser&#39;) # 或者使用 lxml 解析 BeautifulSoup(html, &#39;lxml&#39;)</code></p>
+<h4 id="得到第一个匹配的-Tag-对象-type-为-bs4-element-Tag"><a href="#得到第一个匹配的-Tag-对象-type-为-bs4-element-Tag" class="headerlink" title="得到第一个匹配的 Tag 对象,type 为 bs4.element.Tag"></a>得到第一个匹配的 Tag 对象,type 为 <code>bs4.element.Tag</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">soup.title <span class="comment"># &lt;title&gt;The Dormouse's story&lt;/title&gt;</span></span><br><span class="line">soup.head <span class="comment"># &lt;head&gt;&lt;title&gt;The Dormouse's story&lt;/title&gt;&lt;/head&gt;</span></span><br><span class="line">soup.p <span class="comment"># &lt;p class="title" name="dromouse"&gt;&lt;b&gt;The Dormouse's story&lt;/b&gt;&lt;/p&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="Tag-对象属性"><a href="#Tag-对象属性" class="headerlink" title="Tag 对象属性"></a>Tag 对象属性</h4><ol>
+<li><code>name</code> 返回标签名</li>
+<li><code>attrs</code> 返回标签的所有属性和值，得到一个字典</li>
+<li>对 Tag 对象属性修改 <code>soup.a[&#39;src&#39;]=&#39;&#39;</code></li>
+<li>删除 Tag 某一个属性 <code>del soup.a[&#39;src&#39;]</code></li>
+</ol>
+<h4 id="获取-Tag-对象的内部的文字"><a href="#获取-Tag-对象的内部的文字" class="headerlink" title="获取 Tag 对象的内部的文字"></a>获取 Tag 对象的内部的文字</h4><p><code>soup.p.string</code> 返回一个 <code>NavigableString</code> 对象</p>
+<h3 id="遍历文档树"><a href="#遍历文档树" class="headerlink" title="遍历文档树"></a>遍历文档树</h3><h4 id="获取-Tag-子节点"><a href="#获取-Tag-子节点" class="headerlink" title="获取 Tag 子节点"></a>获取 Tag 子节点</h4><p><code>Tag_obj.contents</code> 返回一个列表<br><code>Tag_obj.children</code> 返回一个 list 生成器对象  </p>
+<h4 id="获取后代节点"><a href="#获取后代节点" class="headerlink" title="获取后代节点"></a>获取后代节点</h4><p><code>Tag_obj.descendants</code> 可使用 <code>for</code> 进行遍历  </p>
+<h4 id="获取多个内容"><a href="#获取多个内容" class="headerlink" title="获取多个内容"></a>获取多个内容</h4><p><code>soup.strings</code> 返回一个生成器对象<br><code>soup.stripped_strings</code> 去除空格和空行  </p>
+<h4 id="搜索-Tag-节点的后代节点"><a href="#搜索-Tag-节点的后代节点" class="headerlink" title="搜索 Tag 节点的后代节点"></a>搜索 Tag 节点的后代节点</h4><p><code>Tag_obj.find_all(name, attrs, recursive, text, **kwargs)</code><br>name 可使用</p>
+<ol start="2">
+<li>字符串 <code>Tag_obj.find_all(&#39;a&#39;)</code></li>
+<li>正则表达式 <code>Tag_obj.find_all(&#39;re.compile(&#39;^b&#39;)&#39;)</code></li>
+<li>列表 <code>Tag_obj.find_all(&#39;a&#39;, &#39;img&#39;)</code></li>
+<li>True 表示查找所有节点 <code>Tag_obj.find_all(True)</code></li>
+<li>传方法可以自定义过滤器  <code>Tag_obj.find_all(filter)</code></li>
+</ol>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="https://wlingxiao.github.io">wlingxiao</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="https://wlingxiao.github.io/2018/10/12/Python-常用库/">https://wlingxiao.github.io/2018/10/12/Python-常用库/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/Python/">Python</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/10/31/Manjaro 安装配置/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">Manjaro 安装配置</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2018/06/22/2018-6-22-MySQL笔记/">
+        <span class="next-text nav-default">MySQL 笔记</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/ahonn" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wlingxiao</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>

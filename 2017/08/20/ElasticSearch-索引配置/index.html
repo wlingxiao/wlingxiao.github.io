@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+<meta name="theme-color" content="#f8f5ec">
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+
+
+  <meta name="description" content="ElasticSearch 索引配置">
+
+
+
+
+  <meta name="keywords" content="ElasticSearch, wlingxiao's blog">
+
+
+
+
+
+
+
+
+
+
+  <link rel="alternate" href="/default" title="wlingxiao's blog">
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=2.10.1">
+
+
+
+<link rel="canonical" href="https://wlingxiao.github.io/2017/08/20/ElasticSearch-索引配置/">
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/fancybox/jquery.fancybox.css">
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/lib/nprogress/nprogress.min.css">
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/style.css?v=2.10.1">
+
+
+
+  
+
+
+
+  <script id="baidu_push">
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+  window.config = {"leancloud":{"app_id":null,"app_key":null},"toc":true,"fancybox":true,"pjax":true};
+</script>
+
+    <title> ElasticSearch 索引配置 - wlingxiao's blog </title>
+  </head>
+
+  <body><div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/." class="logo">wlingxiao's blog</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    
+      <a href="/">
+        <li class="mobile-menu-item">
+          
+          
+            首页
+          
+        </li>
+      </a>
+    
+  </ul>
+</nav>
+
+    <div class="container" id="mobile-panel">
+      <header id="header" class="header"><div class="logo-wrapper">
+  <a href="/." class="logo">wlingxiao's blog</a>
+</div>
+
+<nav class="site-navbar">
+  
+    <ul id="menu" class="menu">
+      
+        <li class="menu-item">
+          <a class="menu-item-link" href="/">
+            
+            
+              首页
+            
+          </a>
+        </li>
+      
+    </ul>
+  
+</nav>
+
+      </header>
+
+      <main id="main" class="main">
+        <div class="content-wrapper">
+          <div id="content" class="content">
+            
+  
+  <article class="post">
+    <header class="post-header">
+      <h1 class="post-title">
+        
+          ElasticSearch 索引配置
+        
+      </h1>
+
+      <div class="post-meta">
+        <span class="post-time">
+          2017-08-20
+        </span>
+        
+          <span class="post-category">
+            
+              <a href="/categories/ElasticSearch/">ElasticSearch</a>
+            
+          </span>
+        
+        
+      </div>
+    </header>
+
+    
+    
+  <div class="post-toc" id="post-toc">
+    <h2 class="post-toc-title">文章目录</h2>
+    <div class="post-toc-content">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#新建简单索引"><span class="toc-text">新建简单索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#带参数新建索引"><span class="toc-text">带参数新建索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#配置-ik-分词器（ElasticSearch-版本-2-4-5）"><span class="toc-text">配置 ik 分词器（ElasticSearch 版本 2.4.5）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#删除索引"><span class="toc-text">删除索引</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#错误"><span class="toc-text">错误</span></a></li></ol>
+    </div>
+  </div>
+
+
+
+    <div class="post-content">
+      
+        <p>索引与 <code>ik</code> 分词器配置<br><a id="more"></a></p>
+<h4 id="新建简单索引"><a href="#新建简单索引" class="headerlink" title="新建简单索引"></a>新建简单索引</h4><p><code>curl -XPUT [address]/index_name</code></p>
+<h4 id="带参数新建索引"><a href="#带参数新建索引" class="headerlink" title="带参数新建索引"></a>带参数新建索引</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">curl -XPUT [address]/index_name -d '&#123;</span><br><span class="line">  "settings": &#123;</span><br><span class="line">     "refresh_interval": "5s",</span><br><span class="line">     "number_of_shards" :   1, // 一个主节点</span><br><span class="line">     "number_of_replicas" : 0 // 0个副本，后面可以加</span><br><span class="line">  &#125;,</span><br><span class="line">  "mappings": &#123;</span><br><span class="line">    "_default_":&#123;</span><br><span class="line">      "_all": &#123; "enabled":  false &#125; // 关闭_all字段，因为我们只搜索title字段</span><br><span class="line">    &#125;,</span><br><span class="line">    "resource": &#123;</span><br><span class="line">      "dynamic": false, // 关闭“动态修改索引”</span><br><span class="line">      "properties": &#123;</span><br><span class="line">        "title": &#123; // 需要索引的字段</span><br><span class="line">          "type": "string",</span><br><span class="line">          "index": "analyzed",</span><br><span class="line">          "fields": &#123;</span><br><span class="line">            "cn": &#123;</span><br><span class="line">              "type": "string",</span><br><span class="line">              "analyzer": "ik_max_word", // 启用 ik 分词,</span><br><span class="line">              "search_analyzer": "ik_max_word"</span><br><span class="line">            &#125;,</span><br><span class="line">            "en": &#123;</span><br><span class="line">              "type": "string",</span><br><span class="line">              "analyzer": "english"</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;'</span><br></pre></td></tr></table></figure>
+<h4 id="配置-ik-分词器（ElasticSearch-版本-2-4-5）"><a href="#配置-ik-分词器（ElasticSearch-版本-2-4-5）" class="headerlink" title="配置 ik 分词器（ElasticSearch 版本 2.4.5）"></a>配置 <code>ik</code> 分词器（ElasticSearch 版本 2.4.5）</h4><p>按照上面的方法配置 <code>ik</code> 分词器不成功，需要按照 elasticsearch-analysis-ik 官方 README 方法才能成功</p>
+<h4 id="删除索引"><a href="#删除索引" class="headerlink" title="删除索引"></a>删除索引</h4><p><code>curl -XDELETE [address]/index_name</code></p>
+<h4 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h4><ul>
+<li><a href="http://www.cnblogs.com/softidea/p/6081326.html" target="_blank" rel="noopener">No handler for type [text] declared on field [content]</a></li>
+</ul>
+<p>建立映射<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">curl -XPOST http://localhost:9200/index/fulltext/_mapping -d'</span><br><span class="line">&#123;</span><br><span class="line">    "fulltext": &#123;</span><br><span class="line">             "_all": &#123;</span><br><span class="line">            "analyzer": "ik_max_word",</span><br><span class="line">            "search_analyzer": "ik_max_word",</span><br><span class="line">            "term_vector": "no",</span><br><span class="line">            "store": "false"</span><br><span class="line">        &#125;,</span><br><span class="line">        "properties": &#123;</span><br><span class="line">            "content": &#123;</span><br><span class="line">                "type": "text",</span><br><span class="line">                "analyzer": "ik_max_word",</span><br><span class="line">                "search_analyzer": "ik_max_word",</span><br><span class="line">                "include_in_all": "true",</span><br><span class="line">                "boost": 8</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;'</span><br></pre></td></tr></table></figure></p>
+<p>响应为 <code>400</code><br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"error"</span>: &#123;</span><br><span class="line">        <span class="attr">"root_cause"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"type"</span>: <span class="string">"mapper_parsing_exception"</span>,</span><br><span class="line">                <span class="attr">"reason"</span>: <span class="string">"No handler for type [text] declared on field [content]"</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">"type"</span>: <span class="string">"mapper_parsing_exception"</span>,</span><br><span class="line">        <span class="attr">"reason"</span>: <span class="string">"No handler for type [text] declared on field [content]"</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">"status"</span>: <span class="number">400</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>上面这个请求在2.3.4版本的es服务器上会执行失败，原因是es 2.3.4上面还没有text这种类型，”type”:”text” 改为 “type”:”String”即可</p>
+</blockquote>
+<p>参考文章：  </p>
+<blockquote>
+<ul>
+<li><a href="http://keenwon.com/1404.html" target="_blank" rel="noopener">为Elasticsearch添加中文分词，对比分词器效果</a>  </li>
+<li><a href="https://github.com/medcl/elasticsearch-analysis-ik" target="_blank" rel="noopener">elasticsearch-analysis-ik</a></li>
+</ul>
+</blockquote>
+
+      
+    </div>
+
+    
+      
+      
+
+  <div class="post-copyright">
+    <p class="copyright-item">
+      <span>原文作者: </span>
+      <a href="https://wlingxiao.github.io">wlingxiao</a>
+    </p>
+    <p class="copyright-item">
+      <span>原文链接: </span>
+      <a href="https://wlingxiao.github.io/2017/08/20/ElasticSearch-索引配置/">https://wlingxiao.github.io/2017/08/20/ElasticSearch-索引配置/</a>
+    </p>
+    <p class="copyright-item">
+      <span>许可协议: </span>
+      
+      <a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/" target="_blank">知识共享署名-非商业性使用 4.0 国际许可协议</a>
+    </p>
+  </div>
+
+
+
+      
+      
+    
+
+    
+      <footer class="post-footer">
+        
+          <div class="post-tags">
+            
+              <a href="/tags/ElasticSearch/">ElasticSearch</a>
+            
+          </div>
+        
+        
+        
+  <nav class="post-nav">
+    
+      <a class="prev" href="/2018/06/22/2018-6-22-MySQL笔记/">
+        <i class="iconfont icon-left"></i>
+        <span class="prev-text nav-default">MySQL 笔记</span>
+        <span class="prev-text nav-mobile">上一篇</span>
+      </a>
+    
+    
+      <a class="next" href="/2017/08/20/sbt-本地和远程仓库配置/">
+        <span class="next-text nav-default">scala sbt 本地和远程仓库配置</span>
+        <span class="prev-text nav-mobile">下一篇</span>
+        <i class="iconfont icon-right"></i>
+      </a>
+    
+  </nav>
+
+
+      </footer>
+    
+
+  </article>
+
+
+          </div>
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+      </main>
+
+      <footer id="footer" class="footer">
+
+  <div class="social-links">
+    
+      
+        
+          <a href="mailto:your@email.com" class="iconfont icon-email" title="email"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+        
+          <a href="https://github.com/ahonn" class="iconfont icon-github" title="github"></a>
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+
+    
+      
+      <a href="/atom.xml" class="iconfont icon-rss" title="rss"></a>
+    
+  </div>
+
+
+
+<div class="copyright">
+  <span class="power-by">
+    由 <a class="hexo-link" href="https://hexo.io/">Hexo</a> 强力驱动
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    主题 - 
+    <a class="theme-link" href="https://github.com/ahonn/hexo-theme-even">Even</a>
+  </span>
+
+  <span class="copyright-year">
+    
+    &copy; 
+     
+      2015 - 
+    
+    2018
+
+    <span class="heart">
+      <i class="iconfont icon-heart"></i>
+    </span>
+    <span class="author">wlingxiao</span>
+  </span>
+</div>
+
+      </footer>
+
+      <div class="back-to-top" id="back-to-top">
+        <i class="iconfont icon-up"></i>
+      </div>
+    </div>
+
+    
+  
+  
+
+  
+
+
+
+    
+  
+
+
+
+  
+  
+
+
+
+
+
+  
+    <script type="text/javascript" src="/lib/jquery/jquery.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/slideout/slideout.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/fancybox/jquery.fancybox.pack.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/pjax/jquery.pjax.min.js"></script>
+  
+
+  
+    <script type="text/javascript" src="/lib/nprogress/nprogress.min.js"></script>
+  
+
+
+    <script type="text/javascript" src="/js/src/even.js?v=2.10.1"></script>
+
+  </body>
+</html>
